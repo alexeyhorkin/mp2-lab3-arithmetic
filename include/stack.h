@@ -23,6 +23,7 @@ public:
 	ValType Check(); //  Посмотреть верхний элемент
 	int CurrentSize(); // Количество элементов в стеке
 	void Clear();
+	int GetMaxSize();
 };
 //////////////////////////////////////////////////////////////
 
@@ -44,7 +45,6 @@ template <class ValType>
  Stack <ValType> :: Stack(const Stack& a)
 {
 	SizeMax = a.SizeMax;
-	delete[] arr;
 	arr = new ValType[SizeMax];
 	for (int i = 0; i < topmember+1; i++)
 		arr[i] = a.arr[i];
@@ -62,10 +62,16 @@ template <class ValType>
 		 arr = new  ValType[SizeMax];
 		 for (int i = 0; i <= topmember; i++)
 			 arr[i] = Copy.arr[i];
-		 arr[++topmember] = a;
+		 arr[topmember] = a;
 	 }
  }
  ////////////////////////////////////////////////////////////
+ template <class ValType>
+ int Stack <ValType>::GetMaxSize() {
+
+	 return SizeMax;
+ }
+ ///////////////////////////////////////////////////////////////
  template <class ValType>
  void Stack <ValType>::dell() {
 

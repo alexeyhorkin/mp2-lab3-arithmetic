@@ -12,6 +12,7 @@ int main()
 	while (k == 0) {
 		cout << "Write your string" << endl;
 		cin >> a;
+		k = 1;
 		k = ChekString(a);
 	}
 	Arifmetic A(a);
