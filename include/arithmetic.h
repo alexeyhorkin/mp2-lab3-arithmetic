@@ -46,7 +46,7 @@ public:
 	void Lala(); // определение параметров
 	double Calculete();
 };
-
 int ChekString(const string a);
+string DellProbel(const string a);
 
 #endif

@@ -24,6 +24,7 @@ public:
 	int CurrentSize(); // Количество элементов в стеке
 	void Clear();
 	int GetMaxSize();
+	Stack<ValType>& operator=(const Stack<ValType>& s);
 };
 //////////////////////////////////////////////////////////////
 
@@ -114,6 +115,23 @@ template <class ValType>
 	 topmember = -1;
  }
  ///////////////////////////////////////////////////////////
+ template<class ValType>
+  Stack<ValType> & Stack<ValType>::operator=(const Stack<ValType> & s)
+ {
+	 if (this != &s)
+	 {
+		 if (SizeMax != s.SizeMax)
+		 {
+			 delete[] arr;
+			 SizeMax = s.SizeMax;
+			 arr = new ValType[SizeMax];
+		 }
+		 topmember = s.topmember;
+		 for (int i = 0; i <= topmember; i++)
+			 arr[i] = s.arr[i];
+	 }
+	 return *this;
+ }
 
 // стек поддерживает операции: 
 // - вставка элемента, 

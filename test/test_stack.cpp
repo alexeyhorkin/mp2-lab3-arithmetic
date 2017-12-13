@@ -41,6 +41,17 @@ TEST_F(BigStack, Can_get_top)
 {
 	EXPECT_EQ(49, bf1.pop());
 }
+TEST_F(BigStack, corecr_oper_ravno)
+{
+	bf3 = bf1;
+	EXPECT_EQ(49, bf3.pop());
+}
+
+TEST_F(BigStack, GEt_max_size)
+{
+	bf3 = bf1;
+	EXPECT_EQ(50, bf3.GetMaxSize());
+}
 
 TEST_F(BigStack, Can_fully_push)
 {
@@ -57,8 +68,6 @@ TEST_P(ParameterizedStack, can_create_bitfield)
 {
 	EXPECT_EQ(GetParam(), bf1.GetMaxSize());
 }
-
-
 
 INSTANTIATE_TEST_CASE_P(Instantiation1,
 	ParameterizedStack,

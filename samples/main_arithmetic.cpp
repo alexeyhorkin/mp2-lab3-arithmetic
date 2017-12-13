@@ -7,12 +7,14 @@ using namespace std;
 int main()
 {
 	int q = 0;
-	string a; int res; Lexem *LexemPtr;
+	string b; string a; int res;
 	int k = 0;
 	while (k == 0) {
 		cout << "Write your string" << endl;
-		cin >> a;
-		k = 1;
+		getline(cin, b);
+	 a = DellProbel(b);
+	 if (a != b)
+		 cout << " String without probels" << endl << a << endl;
 		k = ChekString(a);
 	}
 	Arifmetic A(a);

@@ -1,6 +1,8 @@
 // реализация функций и классов для вычисления арифметических выражений
 #include "arithmetic.h"
 
+
+
 Lexem& Lexem::operator = (const Lexem&b) {
 	if (this != &b)
 	{
@@ -13,7 +15,15 @@ Lexem& Lexem::operator = (const Lexem&b) {
 	return *this;
 }
 
+string DellProbel(const string a) {
+	string b("\0");
+	for (int i = 0; i < a.length(); i++) {
+		if (a[i] != ' ')
+			b.push_back(a[i]);
+	}
+	return b;
 
+}
 
 bool determinatevar(char s) // если английский символ, то вернёт true;
 {
@@ -33,7 +43,7 @@ bool determinatechar(char s) //если char это цифра, то вернём true;
 bool determinateoperand(char s) //если char это  *+/-, то вернём true;
 {
 	int k = s;
-	if ((!determinatechar(s)) && (!determinatevar(s)) && (s != ')') && (s != '('))
+	if ((!determinatechar(s)) && (!determinatevar(s)) && (s != ')') && (s != '(') && (s!='.'))
 		return true;
 	else return false;
 }
@@ -78,23 +88,22 @@ void Arifmetic::GetArrLexOne()
 		{
 		case 0:
 		{
-			//		string b = "(";
 			SimplyLexem[q].setype(0);
 			SimplyLexem[q].setpriority(0);
 			SimplyLexem[q++].setLStr("("); i += 1; v += 1; break; }
 		case -1:
-		{string b = ")";
+		{
 		SimplyLexem[q].setype(-1);
 		SimplyLexem[q].setpriority(-1);
-		SimplyLexem[q++].setLStr(b); i += 1; v += 1; break; }
+		SimplyLexem[q++].setLStr(")"); i += 1; v += 1; break; }
 		case 1:
-		{ string b = "+";
+		{ 
 		SimplyLexem[q].setype(1);
 		SimplyLexem[q].setpriority(1);
-		SimplyLexem[q++].setLStr(b); i += 1; break; }
+		SimplyLexem[q++].setLStr("+"); i += 1; break; }
 		case 2:
 		{
-			if (((i == 0)&(getcase(Str[i + 1]) == 5)) || ((getcase(Str[i - 1]) == 0)&(getcase(Str[i + 1]) == 5))) //если первый сивол - а после него число
+			if (((i == 0)&(getcase(Str[i + 1]) == 5)) || ((i!=0)&&(getcase(Str[i - 1]) == 0)&&(getcase(Str[i + 1]) == 5))) //если первый сивол - а после него число
 			{
 				int k = 1;
 				while ((determinatechar(Str[i + 1])) || (Str[i + 1] == '.'))
@@ -102,7 +111,6 @@ void Arifmetic::GetArrLexOne()
 					k += 1;
 					i++;
 				}
-				// заменить на функцию для string
 				char * c = new char[k];
 				strncpy(c, &Str[i + 1 - k], k);
 				c[k] = '\0';
@@ -156,7 +164,6 @@ void Arifmetic::GetArrLexOne()
 				k += 1;
 				i++;
 			}
-			// заменить на функцию для string
 			char * c = new char[k];
 			strncpy(c, &Str[i - k], k);
 			c[k] = '\0';
@@ -310,26 +317,41 @@ void Arifmetic::Lala()
 	{
 		if (PolishLexem[i].getype() == 6)
 		{
-			cout << "Please, enter ";
-			if (PolishLexem[i].getLStr()[0] == '-')
+			int t = 0;
+			for (int j = 0; j < i; j++)
 			{
-				int k = PolishLexem[i].getLStr().length();
-				for (int z = 1; z < k; z++)
-					cout << PolishLexem[i].getLStr()[z];
-				cout << " ";
+				if ((PolishLexem[j].getype() == 6) && (PolishLexem[i].getLStr() == PolishLexem[j].getLStr()))
+				{
+					double k = PolishLexem[j].getVAR();
+					PolishLexem[i].setVAR(k);
+					t = 1;
+					break;
+				}
 			}
-			else cout << PolishLexem[i].getLStr() << endl;
-			double k;
-			cin >> k;
-			if (PolishLexem[i].getLStr()[0] == '-')
-				PolishLexem[i].setVAR(-k);
-			else PolishLexem[i].setVAR(k);
-			i++;
-		}
-		else
-			i++;
-	}
+			if (t == 0)
+			{
+				cout << "Please, enter ";
+				if (PolishLexem[i].getLStr()[0] == '-')
+				{
+					for (int j = 1; j < PolishLexem[i].getLStr().length(); j++)
+						cout << PolishLexem[i].getLStr()[j];
+					cout << endl;
+					int k;
+					cin >> k;
+					PolishLexem[i].setVAR(-k);
+				}
+				else
+				{
+					cout << PolishLexem[i].getLStr() << endl;
+					int k;
+					cin >> k;
+					PolishLexem[i].setVAR(k);
+				}
+			}
 
+		}
+		i++;
+	}
 }
 
 double Arifmetic::Calculete() {
@@ -366,6 +388,7 @@ double Arifmetic::Calculete() {
 		i++;
 	}
 	cout << " Answer = " << Two.Check() << endl;
+
 	return Two.pop();
 }
 
@@ -473,7 +496,7 @@ int ChekString(const string a)
 	}
 	// проверка первого символа 
 
-	if ((a[0] == '+') || (a[0] == '-') || (a[0] == '*') || (a[0] == '/'))
+	if ((a[0] == '+') || (a[0] == '*') || (a[0] == '/'))
 	{
 		cout << "ERROR pos " << 1 << endl;
 		return 0;
@@ -513,9 +536,27 @@ int ChekString(const string a)
 			return 0;
 		}
 	}
-	cout << "all right" << endl;
-	return 1;
-}
+	// определение  ошибки вида 12.12.13
+	int u = 0;
+	for (int i = 0; i < a.length(); i++) {
+		while ((determinatechar(a[i])) || (a[i] == '.'))
+		{
+			if (a[i] == '.')
+				u += 1;
+			if ((determinateoperand(a[i + 1]))&(u <= 1))
+				u = 0;
+			else if ((determinateoperand(a[i + 1])) && (u > 1))
+			{
+				cout << "ERROR" << endl;
+				return 0;
+			}
+			i++;
+		}
+	}
+		cout << "all right" << endl;
+		return 1;
+	}
+
 
 
 
