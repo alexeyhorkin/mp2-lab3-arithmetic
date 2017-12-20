@@ -240,7 +240,7 @@ void Arifmetic::GetArrLexTwo() {
 					int flag = 0;
 					while ((!One.IsEmpty()) && (flag == 0))
 					{
-						if (One.Check().getpriority() > 1)
+						if (One.Check().getpriority() >= 1)
 							PolishLexem[q++] = One.pop();
 						else flag = 1;
 					}
@@ -267,7 +267,7 @@ void Arifmetic::GetArrLexTwo() {
 					int flag = 0;
 					while ((!One.IsEmpty())&(flag == 0))
 					{
-						if (One.Check().getpriority() > 1)
+						if (One.Check().getpriority() >= 1)
 							PolishLexem[q++] = One.pop();
 						else flag = 1;
 					}
@@ -276,16 +276,56 @@ void Arifmetic::GetArrLexTwo() {
 				}}
 		case 3:
 		{
-			One.push(SimplyLexem[i]);
-			i++;
-			break;
-		}
+			if (One.IsEmpty())
+			{
+				One.push(SimplyLexem[i]);
+				i++;
+				break;
+			}
+			else
+				if (2 > One.Check().getpriority())
+				{
+					One.push(SimplyLexem[i]);
+					i++;
+					break;
+				}
+				else {
+					int flag = 0;
+					while ((!One.IsEmpty())&(flag == 0))
+					{
+						if (One.Check().getpriority() >= 2)
+							PolishLexem[q++] = One.pop();
+						else flag = 1;
+					}
+					One.push(SimplyLexem[i]);
+					i++; break;
+				}}
 		case 4:
 		{
-			One.push(SimplyLexem[i]);
-			i++;
-			break;
-		}
+			if (One.IsEmpty())
+			{
+				One.push(SimplyLexem[i]);
+				i++;
+				break;
+			}
+			else
+				if (2 > One.Check().getpriority())
+				{
+					One.push(SimplyLexem[i]);
+					i++;
+					break;
+				}
+				else {
+					int flag = 0;
+					while ((!One.IsEmpty())&(flag == 0))
+					{
+						if (One.Check().getpriority() >= 2)
+							PolishLexem[q++] = One.pop();
+						else flag = 1;
+					}
+					One.push(SimplyLexem[i]);
+					i++; break;
+				}}
 		case 5:
 		{
 			PolishLexem[q++] = SimplyLexem[i++];
@@ -310,27 +350,154 @@ void Arifmetic::GetArrLexTwo() {
 
 }
 
-void Arifmetic::Lala()
+//int Arifmetic::Lala()
+//{
+//	int i = 0;
+//	int q = 2;
+//	while (i < q1 - v1)
+//	{
+//		if (PolishLexem[i].getype() == 6)
+//		{
+//			int t = 0;
+//			for (int j = 0; j < i; j++)
+//			{
+//				if (PolishLexem[j].getype() == 6)
+//				{
+//					string strcurent = PolishLexem[i].getLStr();
+//					string strj = PolishLexem[j].getLStr();
+//					int flag1 = 0;
+//					int flag2 = 0;
+//					// str1 = без минуса PolishLexem[i].getLStr() f = 1
+//					if (PolishLexem[i].getLStr()[0] == '-')
+//					{
+//						strcurent.erase(0, 1);
+//						flag1 = 1;
+//					}
+//					if (PolishLexem[j].getLStr()[0] == '-')
+//					{
+//						strj.erase(0, 1);
+//						flag2 = 1;
+//					}
+//					// проверить флаг и поменять знак, если надо
+//					if (PolishLexem[i].getLStr() == PolishLexem[j].getLStr())
+//					{
+//						double k = PolishLexem[j].getVAR();
+//						PolishLexem[i].setVAR(k);
+//						t = 1;
+//						break;
+//					}
+//					if ((flag2 == 1) && (strj == (PolishLexem[i].getLStr())))
+//					{
+//						double k = PolishLexem[j].getVAR();
+//						PolishLexem[i].setVAR(-k);
+//						t = 1;
+//						strcurent = "";
+//						strj = "";
+//						break;
+//					}
+//					if ((flag2 == flag1) && (strj == strcurent))
+//					{
+//						double k = PolishLexem[j].getVAR();
+//						PolishLexem[i].setVAR(k);
+//						t = 1;
+//						strcurent = "";
+//						strj = "";
+//						break;
+//					}
+//					if ((flag2 != flag1) && (strj == strcurent))
+//					{
+//						double k = PolishLexem[j].getVAR();
+//						PolishLexem[i].setVAR(-k);
+//						t = 1;
+//						strcurent = "";
+//						strj = "";
+//						break;
+//					}
+//
+//				} // if переменная
+//			} // for j
+//			if (t == 0)
+//			{
+//				cout << "Please, enter ";
+//				q = 0;
+//				if (PolishLexem[i].getLStr()[0] == '-')
+//				{
+//					for (int j = 1; j < PolishLexem[i].getLStr().length(); j++)
+//						cout << PolishLexem[i].getLStr()[j];
+//					cout << endl;
+//					int k;
+//					cin >> k;
+//					PolishLexem[i].setVAR(-k);
+//				}
+//				else
+//				{
+//					cout << PolishLexem[i].getLStr() << endl;
+//					int k;
+//					cin >> k;
+//					PolishLexem[i].setVAR(k);
+//				}
+//			}
+//
+//		}
+//		i++;
+//	}
+//	return q;
+//}
+
+int Arifmetic::Lala()
 {
 	int i = 0;
+	int q = 2;
 	while (i < q1 - v1)
 	{
 		if (PolishLexem[i].getype() == 6)
 		{
 			int t = 0;
+			string strcurent = PolishLexem[i].getLStr();
+			int flag1 = 0;
+
+			if (PolishLexem[i].getLStr()[0] == '-')
+			{
+				strcurent.erase(0, 1);
+				flag1 = 1;
+			}
+
 			for (int j = 0; j < i; j++)
 			{
-				if ((PolishLexem[j].getype() == 6) && (PolishLexem[i].getLStr() == PolishLexem[j].getLStr()))
+				if (PolishLexem[j].getype() == 6)
 				{
-					double k = PolishLexem[j].getVAR();
-					PolishLexem[i].setVAR(k);
-					t = 1;
-					break;
-				}
-			}
+					string strj = PolishLexem[j].getLStr();
+					int flag2 = 0;
+
+					if (PolishLexem[j].getLStr()[0] == '-')
+					{
+						strj.erase(0, 1);
+						flag2 = 1;
+					}
+
+					if (strj == strcurent)
+					{
+						if (flag2 == flag1)
+						{
+							double k = PolishLexem[j].getVAR();
+							PolishLexem[i].setVAR(k);
+							t = 1;
+							break;
+						}
+						else
+						{
+							double k = PolishLexem[j].getVAR();
+							PolishLexem[i].setVAR(-k);
+							t = 1;
+							break;
+						}
+					}
+				} // if переменная
+			} // for j
 			if (t == 0)
 			{
 				cout << "Please, enter ";
+				q = 0;
 				if (PolishLexem[i].getLStr()[0] == '-')
 				{
 					for (int j = 1; j < PolishLexem[i].getLStr().length(); j++)
@@ -352,7 +519,10 @@ void Arifmetic::Lala()
 		}
 		i++;
 	}
+	return q;
 }
+
+
 
 double Arifmetic::Calculete() {
 	int z = q1 - v1, i = 0;
@@ -371,7 +541,7 @@ double Arifmetic::Calculete() {
 		{
 			double a = Two.pop();
 			double b = Two.pop();
-			Two.push(b - a);
+			Two.push(b-a);
 		}
 		else if (PolishLexem[i].getype() == 3)
 		{
@@ -388,7 +558,6 @@ double Arifmetic::Calculete() {
 		i++;
 	}
 	cout << " Answer = " << Two.Check() << endl;
-
 	return Two.pop();
 }
 

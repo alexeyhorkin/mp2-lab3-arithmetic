@@ -24,13 +24,14 @@ int main()
 	A.PrintArrLex2();
 	while (q != 2)
 	{
-		A.Lala();
+		q=A.Lala();
 		A.Calculete();
-		cout << "If you want to change the variables, press 1, else 2" << endl;
-		cin >> q;
+		if (q != 2)
+		{
+			cout << "If you want to change the variables, press 1, else 2" << endl;
+			cin >> q;
+		}
 	}
-
-
   return 0;
 }
 //проверка на корректность строки

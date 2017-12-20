@@ -18,7 +18,6 @@ public:
 	Stack(const Stack& a);
 	void push(const ValType a); // Положить элемент на вершину стека
 	ValType pop(); // Удалить с вершины стека и вернуть
-	void dell();
 	bool IsEmpty(); // Проверить пустой ли
 	ValType Check(); //  Посмотреть верхний элемент
 	int CurrentSize(); // Количество элементов в стеке
@@ -73,14 +72,7 @@ template <class ValType>
 	 return SizeMax;
  }
  ///////////////////////////////////////////////////////////////
- template <class ValType>
- void Stack <ValType>::dell() {
-
-	 if (topmember != -1)
-		 topmember -= 1;
-	 else throw "lalala";
- }
- ////////////////////////////////////////////////////////////
+ 
  template <class ValType>
  ValType Stack <ValType>::pop()
  {

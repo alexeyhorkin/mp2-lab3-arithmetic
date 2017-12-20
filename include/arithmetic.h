@@ -43,7 +43,7 @@ public:
     void PrintArrLex();
 	void PrintArrLex2();
 	void GetArrLexTwo();
-	void Lala(); // определение параметров
+	int Lala(); // определение параметров
 	double Calculete();
 };
 int ChekString(const string a);
